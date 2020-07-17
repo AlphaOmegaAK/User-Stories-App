@@ -18,5 +18,8 @@ if (process.env.NODE_ENV === "development") {
 app.engine(".hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
 app.set("view engine", ".hbs");
 
+//* ROUTES
+app.use("/", require("./controllers/index"));
+
 const PORT = process.env.PORT || 3500;
 app.listen(PORT, console.log(`Sever Running on Port: ${PORT}`));

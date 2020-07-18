@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", require("./controllers/index"));
 app.use("/auth", require("./controllers/auth"));
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 app.listen(
   PORT,
   console.log(

@@ -16,10 +16,11 @@ router.get('/', ensureGuest, (req, res, next) => {
 });
 
 
-router.get('/dashboard', ensureAuth, async (req, res) => {
+router.get('/dashboard', async (req, res) => {
   try {
     const posts = await Post.find({
-      user: req.user.id}).lean()
+      user: req.user.id
+    }).lean()
     res.render('dashboard', {
       name: req.user.firstName,
       posts

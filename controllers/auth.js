@@ -4,7 +4,9 @@ const passport = require("passport");
 
 
 //* GET auth/google
-router.get("/google", passport.authenticate("google", { scope: ["profile"] }));
+router.get("/google", passport.authenticate("google", {
+  scope: ["profile"]
+}));
 
 //* GET auth/google/callback
 router.get(
@@ -18,7 +20,7 @@ router.get(
 );
 
 //* /auth/logout LogOut User
-router.get('/logout', (req, res) =>{
+router.get('/logout', (req, res) => {
   req.logout('/');
   res.redirect('/')
 });

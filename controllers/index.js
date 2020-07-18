@@ -5,6 +5,8 @@ const {
   ensureGuest
 } = require('../middleware/authMiddleware')
 
+const Post = require('../models/Posts')
+
 
 //* GET: / home page.
 router.get('/', ensureGuest, (req, res, next) => {
@@ -12,13 +14,28 @@ router.get('/', ensureGuest, (req, res, next) => {
     layout: 'loginLayout',
   })
 })
+//? Functionality for both models to work together
+router.get('/dashboard', ensureAuth, async (req, res) => {
+  try {
+    const posts = await Post.find({
+      user: req.user.id}).lean()
+    res.render('dashboard', {
+      name: req.user.firstName,
+      posts
+    })
+  } catch (err) {
+
+  }
+})
+
+
+
+
 
 //* GET: /dashboard
 router.get('/dashboard', ensureAuth, (req, res) => {
   console.log(req.user)
-  res.render('dashboard', {
-    name: req.user.firstName,
-  })
+
 })
 
 //* GET: /auth/google

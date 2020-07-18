@@ -1,4 +1,4 @@
-const mongoose = require('mongoosed');
+const mongoose = require('mongoose');
 const User = require('./User');
 
 const PostSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const PostSchema = new mongoose.Schema({
    },
    status: {
       type: String,
-      default: public,
+      default: 'public',
       enum: ['public', 'private']
    },
    user: {

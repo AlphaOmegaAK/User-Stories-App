@@ -57,6 +57,7 @@ app.use(express.static(path.join(__dirname, "public")));
 //* ROUTES
 app.use("/", require("./controllers/index"));
 app.use("/auth", require("./controllers/auth"));
+app.use('/posts', require('./controllers/posts'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(

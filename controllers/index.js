@@ -1,20 +1,22 @@
-var express = require("express");
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const {ensureAuth, ensureGuest} = require('../middleware/authMiddleware')
+
 
 //* GET: / home page.
-router.get("/", (req, res, next) => {
-  res.render("login", {
-    layout: "loginLayout",
-  });
-});
+router.get('/',ensureGuest, (req, res, next) => {
+  res.render('login', {
+    layout: 'loginLayout',
+  })
+})
 
 //* GET: /dashboard
-router.get("/dashboard", (req, res) => {
-  res.render("dashboard");
-});
+router.get('/dashboard', ensureAuth, (req, res) => {
+  res.render('dashboard')
+})
 
 //* GET: /auth/google
 
 //* GET: /auth/google/callback
 
-module.exports = router;
+module.exports = router

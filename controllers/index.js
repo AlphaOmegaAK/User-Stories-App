@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const {ensureAuth, ensureGuest} = require('../middleware/authMiddleware')
+const {
+  ensureAuth,
+  ensureGuest
+} = require('../middleware/authMiddleware')
 
 
 //* GET: / home page.
-router.get('/',ensureGuest, (req, res, next) => {
+router.get('/', ensureGuest, (req, res, next) => {
   res.render('login', {
     layout: 'loginLayout',
   })
@@ -12,7 +15,10 @@ router.get('/',ensureGuest, (req, res, next) => {
 
 //* GET: /dashboard
 router.get('/dashboard', ensureAuth, (req, res) => {
-  res.render('dashboard')
+  console.log(req.user)
+  res.render('dashboard', {
+    name: req.user.firstName,
+  })
 })
 
 //* GET: /auth/google

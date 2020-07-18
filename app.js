@@ -1,14 +1,18 @@
 const path = require("path");
 const express = require("express");
+const mongoose = require('mongoose');
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const exphbs = require("express-handlebars");
 const passport = require("passport");
 const session = require("express-session");
+const MongoStore = require('connect-mongo')(session)
 const connectDB = require("./config/db");
 
 //? Load Config
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({
+  path: "./config/config.env"
+});
 //? Passport Config
 require("./config/passport")(passport);
 
@@ -21,7 +25,10 @@ app.use(
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    //! Mongo Store key goes here
+    store: new MongoStore({
+      mongooseConnection: mongoose.connection
+    })
+
   })
 );
 
@@ -31,9 +38,14 @@ if (process.env.NODE_ENV === "dev") {
 }
 
 //* HandleBars Views Engine
-app.engine(".hbs", exphbs({ defaultLayout: "main", extname: ".hbs" }));
+app.engine(".hbs", exphbs({
+  defaultLayout: "main",
+  extname: ".hbs"
+}));
 app.set("view engine", ".hbs");
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({
+  extended: false
+}));
 
 //* Passport Middleware
 app.use(passport.initialize());

@@ -13,8 +13,9 @@ router.get('/', ensureGuest, (req, res, next) => {
   res.render('login', {
     layout: 'loginLayout',
   })
-})
-//? Functionality for both models to work together
+});
+
+
 router.get('/dashboard', ensureAuth, async (req, res) => {
   try {
     const posts = await Post.find({

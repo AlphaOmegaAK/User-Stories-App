@@ -24,7 +24,9 @@ connectDB();
 const app = express();
 
 
-//? Body Parser(to access the data from form through req.body) 
+//? Body Parser(to access the data from form through req.body)
+//* this doesnt include the user which is part of the posts schema 
+//* we can get the use from req.user (POST add post route)
 app.use(express.urlencoded({
   extended: false
 }));
@@ -53,16 +55,25 @@ app.use(
   })
 );
 
+app.use(express.urlencoded({
+  extended: false
+}));
+
+// Handlebars Assistance
+const {
+  formatDate
+} = require('./assistance/hbs')
+
 
 //* HandleBars Views Engine
 app.engine(".hbs", exphbs({
+  helpers: {
+    formatDate
+  },
   defaultLayout: "main",
   extname: ".hbs"
 }));
 app.set("view engine", ".hbs");
-app.use(express.urlencoded({
-  extended: false
-}));
 
 //* Passport Middleware
 app.use(passport.initialize());

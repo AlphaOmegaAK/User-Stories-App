@@ -9,15 +9,36 @@ const session = require("express-session");
 const MongoStore = require('connect-mongo')(session)
 const connectDB = require("./config/db");
 
+
 //? Load Config
 dotenv.config({
   path: "./config/config.env"
 });
+
+
 //? Passport Config
 require("./config/passport")(passport);
 
+
 connectDB();
 const app = express();
+
+
+//? Body Parser(to access the data from form through req.body) 
+app.use(express.urlencoded({
+  extended: false
+}));
+
+
+// This is for any Json Data
+app.use(express.json());
+
+
+//* morgan will run only in dev mode
+if (process.env.NODE_ENV === "dev") {
+  app.use(morgan("dev"));
+}
+
 
 // ? Sessions
 app.use(
@@ -32,10 +53,6 @@ app.use(
   })
 );
 
-//* morgan will run only in dev mode
-if (process.env.NODE_ENV === "dev") {
-  app.use(morgan("dev"));
-}
 
 //* HandleBars Views Engine
 app.engine(".hbs", exphbs({

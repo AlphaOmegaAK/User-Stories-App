@@ -4,6 +4,7 @@ const User = require('./User');
 const PostSchema = new mongoose.Schema({
    title: {
       type: String,
+      required: true,
       trim: true,
    },
    body: {

@@ -61,14 +61,18 @@ app.use(express.urlencoded({
 
 // Handlebars Assistance
 const {
-  formatDate
+  formatDate,
+  stripTags,
+  truncate
 } = require('./assistance/hbs')
 
 
 //* HandleBars Views Engine
 app.engine(".hbs", exphbs({
   helpers: {
-    formatDate
+    formatDate,
+    stripTags,
+    truncate
   },
   defaultLayout: "main",
   extname: ".hbs"

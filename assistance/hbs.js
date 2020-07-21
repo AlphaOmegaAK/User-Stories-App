@@ -6,3 +6,5 @@ module.exports = {
     return moment(date).format(format)
   },
 }
+
+// to use moment now, need to register it with handlebars 

@@ -23,8 +23,8 @@
       </thead>
       {{#each posts}}
       <tr>
-         <td><a href="/posts/{{_id}}"></a>{{title}}</td>
-         <td>{{createdAt}}</td>
+         <td><a href="/posts/{{{_id}}"></a>{{title}}</td>
+         <td>{{formatDate createdAt 'MMMM Do YYYY, h:mm:ss a'}}</td>
          <td><span class="dash-status">{{status}}</span></td>
          <td></td>
       </tr>

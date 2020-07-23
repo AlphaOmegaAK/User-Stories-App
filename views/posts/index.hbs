@@ -14,11 +14,11 @@
     <div class="col s12 m4">
       <div class="card">
         <div class="card-image">
-          {{!-- To Do: editIcon --}}
+          {{editIcon user ../user _id}}
         </div>
         <div class="card-content center-align">
           <h5>{{title}}</h5>
-          <p>{{stripTags  (truncate body 80)}}</p>
+          <p>{{stripTags  (truncate body )}}</p>
           <br>
           <div class="chip">
             <img src="{{user.image}}" alt="">

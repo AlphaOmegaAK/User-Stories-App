@@ -63,7 +63,8 @@ app.use(express.urlencoded({
 const {
   formatDate,
   stripTags,
-  truncate
+  truncate,
+  editIcon,
 } = require('./assistance/hbs')
 
 
@@ -72,26 +73,37 @@ app.engine(".hbs", exphbs({
   helpers: {
     formatDate,
     stripTags,
-    truncate
+    truncate,
+    editIcon
   },
   defaultLayout: "main",
   extname: ".hbs"
 }));
 app.set("view engine", ".hbs");
 
+
 //* Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+//* Set Global Variable so template vies can see User
+app.use(function (req, res, next) {
+  res.locals.user = req.user || null;
+})
+
+
 //* Static Folder
 app.use(express.static(path.join(__dirname, "public")));
+
 
 //* ROUTES
 app.use("/", require("./controllers/index"));
 app.use("/auth", require("./controllers/auth"));
 app.use('/posts', require('./controllers/posts'));
 
-const PORT = process.env.PORT || 3000;
+
+const PORT = process.env.PORT || 4000;
 app.listen(
   PORT,
   console.log(

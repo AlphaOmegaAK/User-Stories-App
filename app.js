@@ -59,7 +59,7 @@ app.use(express.urlencoded({
   extended: false
 }));
 
-// Handlebars Assistance
+//*  Handlebars Assistance (helpers)
 const {
   formatDate,
   stripTags,

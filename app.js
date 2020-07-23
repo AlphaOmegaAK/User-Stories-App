@@ -90,6 +90,7 @@ app.use(passport.session());
 //* Set Global Variable so template vies can see User
 app.use(function (req, res, next) {
   res.locals.user = req.user || null;
+  next();
 })
 
 
@@ -103,7 +104,7 @@ app.use("/auth", require("./controllers/auth"));
 app.use('/posts', require('./controllers/posts'));
 
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 app.listen(
   PORT,
   console.log(

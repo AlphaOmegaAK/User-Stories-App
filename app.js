@@ -24,7 +24,9 @@ connectDB();
 const app = express();
 
 
-//? Body Parser(to access the data from form through req.body) 
+//? Body Parser(to access the data from form through req.body)
+//* this doesnt include the user which is part of the posts schema 
+//* we can get the use from req.user (POST add post route)
 app.use(express.urlencoded({
   extended: false
 }));
@@ -53,28 +55,54 @@ app.use(
   })
 );
 
+app.use(express.urlencoded({
+  extended: false
+}));
+
+//*  Handlebars Assistance (helpers)
+const {
+  formatDate,
+  stripTags,
+  truncate,
+  editIcon,
+} = require('./assistance/hbs')
+
 
 //* HandleBars Views Engine
 app.engine(".hbs", exphbs({
+  helpers: {
+    formatDate,
+    stripTags,
+    truncate,
+    editIcon
+  },
   defaultLayout: "main",
   extname: ".hbs"
 }));
 app.set("view engine", ".hbs");
-app.use(express.urlencoded({
-  extended: false
-}));
+
 
 //* Passport Middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+//* Set Global Variable so template vies can see User
+app.use(function (req, res, next) {
+  res.locals.user = req.user || null;
+  next();
+})
+
+
 //* Static Folder
 app.use(express.static(path.join(__dirname, "public")));
+
 
 //* ROUTES
 app.use("/", require("./controllers/index"));
 app.use("/auth", require("./controllers/auth"));
 app.use('/posts', require('./controllers/posts'));
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(
